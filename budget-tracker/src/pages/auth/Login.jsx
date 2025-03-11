@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/inputs/Input.jsx";
+import {validateEmail} from "../../utils/helpers.js";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -11,6 +12,17 @@ const Login = () => {
 
     // Handle login
     const handleLogin = async (e) => {
+        e.preventDefault();
+
+        if(!validateEmail(email)) {
+            setError("Please enter a valid email!");
+            return;
+        }
+        if(!password) {
+            setError("Please enter your password!");
+            return;
+        }
+        setError("");
     };
 
     return (
