@@ -10,9 +10,11 @@ import Signup from "./pages/auth/Signup.jsx";
 import Home from "./pages/dashboard/Homepage.jsx";
 import Income from "./pages/dashboard/Income.jsx";
 import Expense from "./pages/dashboard/Expense.jsx";
+import UserProvider from "./context/UserContext.jsx";
 
 const App = () => {
     return (
+        <UserProvider>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Root />} />
@@ -23,6 +25,7 @@ const App = () => {
                 <Route path="/expense" element={<Expense />} />
             </Routes>
         </BrowserRouter>
+        </UserProvider>
     );
 };
 
