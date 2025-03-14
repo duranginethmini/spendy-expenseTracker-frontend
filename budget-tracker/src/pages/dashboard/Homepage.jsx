@@ -4,6 +4,10 @@ import {UseUserAuth} from "../../hooks/UseUserAuth.jsx";
 import {useNavigate} from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {API_PATHS} from "../../utils/apiPath.js";
+import {IoMdCard} from "react-icons/io";
+import InfoCard from "../../components/Cards/InfoCard.jsx";
+import {LuHandCoins,LuWalletMinimal} from "react-icons/lu";
+import {addThousandsSeparator} from "../../utils/helpers.js";
 
 const Home = () => {
     UseUserAuth();
@@ -36,9 +40,28 @@ const Home = () => {
     },[])
     return (
         <DashboardLayout activeMenu="Dashboard">
-            <div className="my-5 mx-auto w-full text-center text-gray-600">
-                Welcome to your Expense Tracker Dashboard!
-            </div>
+           <div className = "my-5 mx-auto">
+               <div className="grid grid-cols md:grid-cols-3 gap-6">
+                   <InfoCard
+                       icon = {<IoMdCard/>}
+                       label = "Total Balance"
+                       value = {addThousandsSeparator(dashboardData?.totalBalance || 0 )}
+                       color = "bg-primary"
+                       />
+                   <InfoCard
+                       icon = {<IoMdCard/>}
+                       label = "Total Income"
+                       value = {addThousandsSeparator(dashboardData?.totalBalance || 0 )}
+                       color = "bg-orange-500"
+                   />
+                   <InfoCard
+                       icon = {<IoMdCard/>}
+                       label = "Total Expense"
+                       value = {addThousandsSeparator(dashboardData?.totalBalance || 0 )}
+                       color = "bg-red-500"
+                   />
+               </div>
+           </div>
         </DashboardLayout>
     );
 };
