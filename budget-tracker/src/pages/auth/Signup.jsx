@@ -7,6 +7,7 @@ import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector.j
 import axiosInstance from "../../utils/axiosInstance.js";
 import {API_PATHS} from "../../utils/apiPath.js";
 import {UserContext} from "../../context/UserContext.jsx";
+import uploadImage from "../../utils/uploadImage.js";
 
 const Signup = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -47,7 +48,8 @@ const Signup = () => {
             const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
                 fullName,
                 email,
-                password
+                password,
+                profileImageUrl
             });
             const { token, user } = response.data;
             if (token) {
