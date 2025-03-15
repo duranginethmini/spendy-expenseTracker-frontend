@@ -3,6 +3,7 @@ import DashboardLayout from "../../components/layouts/DashboardLayout.jsx";
 import IncomeOverview from "../../components/Income/IncomeOverview.jsx";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {API_PATHS} from "../../utils/apiPath.js";
+import Modal from "../../components/Modal.jsx";
 
 const Income = () => {
     const [incomeData, setIncomeData] = React.useState([]);
@@ -54,6 +55,13 @@ const Income = () => {
                                  />
                          </div>
                      </div>
+                     <Modal
+                         isOpen={openAddIncomeModal}
+                         onClose={() => setOpenAddIncomeModal(false)}
+                         title="Add Income"
+                         >
+                         <div></div>
+                     </Modal>
                  </div>
         </DashboardLayout>
     )
