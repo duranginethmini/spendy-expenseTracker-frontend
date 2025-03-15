@@ -83,10 +83,6 @@ const Home = () => {
                     <Last30DaysExpenses
                         data={dashboardData?.last30DaysExpense?.transactions || []}
                     />
-                    {/*<RecentIncomeWithChart*/}
-                    {/*    data={dashboardData?.transactions?.slice(0, 4) || []}*/}
-                    {/*    totalIncome={dashboardData?.totalIncome || 0}*/}
-                    {/*/>*/}
                     <RecentIncomeWithChart
                         data={dashboardData?.last60DaysIncome?.transactions?.slice(0, 4) || []}
                         totalIncome={dashboardData?.totalIncome || 0}

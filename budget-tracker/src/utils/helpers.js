@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -31,5 +33,28 @@ export const prepareExpenseBarChartData = (data = []) => {
         category: item?.category,
         amount: item?.amount,
     }));
-    return chartData; // Ensure to return the chartData
+    return chartData;
+};
+
+// export const prepareIncomeBarChartData = (data = []) => {
+//     const sortedData = [...data].sort((a,b) => new Date(a.date) - new Date(b.date));
+//
+//     const ChartData = sortedData.map((item) => ({
+//         month:moment(item?.date).format("YYYY-MM-DD"),
+//         amount: item?.amount,
+//         source: item?.source,
+//     }));
+//     return ChartData;
+// }
+export const prepareIncomeBarChartData = (data = []) => {
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    return data
+        .filter((item) => item.date && item.amount) // Ensure valid data
+        .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date
+        .map((item) => ({
+            month: moment(item.date).format("MMM YYYY"), // Example: "Mar 2025"
+            amount: item.amount || 0,
+            source: item.source || "Unknown",
+        }));
 };
