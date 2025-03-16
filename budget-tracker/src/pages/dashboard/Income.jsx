@@ -6,8 +6,12 @@ import {API_PATHS} from "../../utils/apiPath.js";
 import Modal from "../../components/Modal.jsx";
 import AddIncomeForm from "../../components/Income/AddIncomeForm.jsx";
 import toast from "react-hot-toast";
+import IncomeList from "../../components/Income/IncomeList.jsx";
+import DeleteAlert from "../../components/DeleteAlert.jsx";
+import {UseUserAuth} from "../../hooks/UseUserAuth.jsx";
 
 const Income = () => {
+    UseUserAuth();
     const [incomeData, setIncomeData] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [openDeleteAlert, setOpenDeleteAlert] = React.useState({
@@ -65,7 +69,20 @@ const Income = () => {
     };
 
     //Delete Income
-    const deleteIncome = async (id) => {}
+    const deleteIncome = async (id) => {
+        try {
+            const deleteURL = API_PATHS.INCOME.DELETE_INCOME(id);
+            console.log("Deleting Income from:", deleteURL); // Debugging
+
+            await axiosInstance.delete(deleteURL);
+            setOpenDeleteAlert({ show: false, data: null });
+            toast.success("Income deleted successfully!");
+            fetchIncomeDetails();
+        } catch (error) {
+            console.error("Error deleting income detail:", error.response?.data?.message || error.message);
+        }
+    };
+
 
     //download income detail
     const handleDownloadIncomeDetail = async () => {}
@@ -85,6 +102,13 @@ const Income = () => {
                                  onAddIncome = {() => setOpenAddIncomeModal(true)}
                                  />
                          </div>
+                         <IncomeList
+                             transaction  = {incomeData}
+                             onDelete={(id) => {
+                                 setOpenDeleteAlert({show:true, data:id});
+                             }}
+                             onDownload = {handleDownloadIncomeDetail}
+                             />
                      </div>
                      <Modal
                          isOpen={openAddIncomeModal}
@@ -92,6 +116,16 @@ const Income = () => {
                          title="Add Income"
                          >
                          <AddIncomeForm onAddIncome={handleAddIncome} />
+                     </Modal>
+                     <Modal
+                     isOpen={openDeleteAlert.show}
+                     onClose={() => setOpenDeleteAlert({show:false,data:null })}
+                     title="Delete Income"
+                     >
+                         <DeleteAlert
+                             content="Are you sure you want to delete this Income?"
+                             onDelete = {() => deleteIncome(openDeleteAlert.data)}
+                             />
                      </Modal>
                  </div>
         </DashboardLayout>
