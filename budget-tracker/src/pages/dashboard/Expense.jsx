@@ -5,6 +5,8 @@ import axiosInstance from "../../utils/axiosInstance.js";
 import {API_PATHS} from "../../utils/apiPath.js";
 import toast from "react-hot-toast";
 import ExpenseOverview from "../../components/Expense/ExpenseOverview.jsx";
+import Modal from "../../components/Modal.jsx";
+import AddExpenseForm from "../../components/Expense/AddExpenseForm.jsx";
 
 const Expense = () => {
     UseUserAuth();
@@ -49,7 +51,7 @@ const Expense = () => {
             return;
         }
         try {
-            await axiosInstance.post(API_PATHS.INCOME.ADD_EXPENSE, {
+            await axiosInstance.post(API_PATHS.EXPENSE.ADD_EXPENSE, {
                 category,
                 amount,
                 date,
@@ -79,6 +81,13 @@ const Expense = () => {
                             />
                     </div>
                 </div>
+                <Modal
+                    isOpen={openAddExpenseModal}
+                    onClose={() => setOpenAddExpenseModal(false)}
+                    title="Add Expense"
+                    >
+                    <AddExpenseForm onAddExpense={handleAddExpense} />
+                </Modal>
             </div>
             </DashboardLayout>
     )
