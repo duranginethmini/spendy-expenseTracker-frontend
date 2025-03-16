@@ -7,12 +7,12 @@ const AddIncomeForm = ({ onAddIncome }) => {
         source: "",
         amount: "",
         date: "",
-        icon: "" // ✅ Make sure this is updated correctly
+        icon: ""
     });
 
     const handleChange = (key, value) => {
         setIncome(prevState => ({ ...prevState, [key]: value }));
-        console.log(`Updated ${key}:`, value); // Debugging
+        console.log(`Updated ${key}:`, value);
     };
 
     return (
