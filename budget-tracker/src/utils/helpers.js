@@ -53,8 +53,22 @@ export const prepareIncomeBarChartData = (data = []) => {
         .filter((item) => item.date && item.amount) // Ensure valid data
         .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date
         .map((item) => ({
-            month: moment(item.date).format("MMM YYYY"), // Example: "Mar 2025"
+            month: moment(item.date).format("DD MMM"), // Example: "Mar 2025"
             amount: item.amount || 0,
             source: item.source || "Unknown",
         }));
 };
+
+export const prepareExpenseLineChartData = (data = []) => {
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    return data
+        .filter((item) => item.date && item.amount) // Ensure valid data
+        .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date
+        .map((item) => ({
+            month: moment(item.date).format("DD MMM"),
+            amount: item.amount || 0,
+            source: item.category || "Unknown",
+        }));
+};
+
